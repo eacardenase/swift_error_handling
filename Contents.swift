@@ -22,4 +22,18 @@ class Lexer {
         self.input = input
         self.position = input.startIndex
     }
+    
+    func peek() -> Character? {
+        guard position < input.endIndex else {
+            return nil
+        }
+        
+        return input[position]
+    }
+    
+    func advance() {
+        assert(position < input.endIndex, "Cannot advance past lastIndex!")
+        
+        position = input.index(after: position)
+    }
 }
