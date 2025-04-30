@@ -36,4 +36,24 @@ class Lexer {
         
         position = input.index(after: position)
     }
+    
+    func lex() throws -> [Token] {
+        var tokens = [Token]()
+        
+        while let nextCharacter = peek() {
+            switch nextCharacter {
+            case "0"..."9":
+                break
+            case "+":
+                tokens.append(.plus)
+                advance()
+            case " ":
+                advance()
+            default:
+                break
+            }
+        }
+        
+        return tokens
+    }
 }
