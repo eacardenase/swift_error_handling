@@ -15,6 +15,10 @@ enum Token: CustomStringConvertible {
 }
 
 class Lexer {
+    enum Error: Swift.Error {
+        case invalidCharacter(Character)
+    }
+    
     let input: String
     var position: String.Index
     
@@ -50,7 +54,7 @@ class Lexer {
             case " ":
                 advance()
             default:
-                break
+                throw Lexer.Error.invalidCharacter(nextCharacter)
             }
         }
         
