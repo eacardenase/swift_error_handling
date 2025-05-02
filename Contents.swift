@@ -82,3 +82,15 @@ class Lexer {
         return tokens
     }
 }
+
+func evaluate(_ input: String) {
+    print("Evaluating: \(input)")
+    
+    let lexer = Lexer(input: input)
+    let tokens = lexer.lex()
+    
+    print("Lexer output: \(tokens)")
+}
+
+evaluate("10! + 3 + 5")
+evaluate("1 + 2 + three")
