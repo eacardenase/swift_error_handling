@@ -92,6 +92,8 @@ func evaluate(_ input: String) {
         let tokens = try lexer.lex()
         
         print("Lexer output: \(tokens)")
+    } catch Lexer.Error.invalidCharacter(let character) {
+        print("Input contained an invalid character: \(character)")
     } catch {
         print("An error ocurred: \(error)")
     }
