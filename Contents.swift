@@ -99,6 +99,27 @@ func evaluate(_ input: String) {
     }
 }
 
+class Parser {
+    let tokens: [Token]
+    var position = 0
+    
+    init(tokens: [Token]) {
+        self.tokens = tokens
+    }
+    
+    func getNextToken() -> Token? {
+        guard position < tokens.count else {
+            return nil
+        }
+        
+        let token = tokens[position]
+        position += 1
+        
+        return token
+    }
+}
+
 evaluate("10 + 3 + 5")
-evaluate("10! + 3 + 5")
-evaluate("1 + 2 + three")
+//evaluate("10+3+5")
+//evaluate("10! + 3 + 5")
+//evaluate("1 + 2 + three")
