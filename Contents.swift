@@ -135,6 +135,22 @@ class Parser {
             throw Parser.Error.invalidToken(token)
         }
     }
+    
+    func parse() throws -> Int {
+        var value = try getNumber()
+        
+        while let token = getNextToken() {
+            switch token {
+            case .plus:
+                let nextNumber = try getNumber()
+                value += nextNumber
+            case .number:
+                throw Parser.Error.invalidToken(token)
+            }
+        }
+        
+        return value
+    }
 }
 
 evaluate("10 + 3 + 5")
