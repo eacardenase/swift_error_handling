@@ -100,6 +100,11 @@ func evaluate(_ input: String) {
 }
 
 class Parser {
+    enum Error: Swift.Error {
+        case unexpectedEndOfInput
+        case invalidToken(Token)
+    }
+    
     let tokens: [Token]
     var position = 0
     
@@ -116,6 +121,19 @@ class Parser {
         position += 1
         
         return token
+    }
+    
+    func getNumber() throws -> Int {
+        guard let token = getNextToken() else {
+            throw Parser.Error.unexpectedEndOfInput
+        }
+        
+        switch token {
+        case .number(let value):
+            return value
+        case .plus:
+            throw Parser.Error.invalidToken(token)
+        }
     }
 }
 
