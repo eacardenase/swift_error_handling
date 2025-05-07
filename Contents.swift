@@ -141,9 +141,9 @@ func evaluate(_ input: String) {
     print("Evaluating: \(input)")
     
     let lexer = Lexer(input: input)
+    let tokens = try! lexer.lex()
     
     do {
-        let tokens = try lexer.lex()
         print("Lexer output: \(tokens)")
         
         let parser = Parser(tokens: tokens)
