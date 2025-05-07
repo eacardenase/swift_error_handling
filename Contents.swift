@@ -141,13 +141,14 @@ func evaluate(_ input: String) {
     print("Evaluating: \(input)")
     
     let lexer = Lexer(input: input)
-    guard let tokens = try? lexer.lex() else {
-        print("Lexer failed, but I don't know why")
-        
-        return
-    }
+//    guard let tokens = try? lexer.lex() else {
+//        print("Lexer failed, but I don't know why")
+//        
+//        return
+//    }
     
     do {
+        let tokens = try lexer.lex()
         print("Lexer output: \(tokens)")
         
         let parser = Parser(tokens: tokens)
