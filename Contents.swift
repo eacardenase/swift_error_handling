@@ -182,5 +182,16 @@ func evaluate(_ input: String) {
 //evaluate("10 + 3 5")
 //evaluate("10 + 3 +")
 //evaluate("10 + 5 - 3 - 1")
-evaluate("1 + 3 + 7a + 8")
-evaluate("10 + 3 3 + 7")
+//evaluate("1 + 3 + 7a + 8")
+//evaluate("10 + 3 3 + 7")
+
+let lexer = Lexer(input: "1 + 3 + 3 + 7")
+let tokensResult = Result { try lexer.lex() }
+
+switch tokensResult {
+case let .success(tokens):
+    print("Found \(tokens.count) tokens: \(tokens)")
+case let .failure(error):
+    print("Couldn't lex '\(lexer.input)': \(error)")
+}
+
