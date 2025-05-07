@@ -195,3 +195,13 @@ case let .failure(error):
     print("Couldn't lex '\(lexer.input)': \(error)")
 }
 
+let numbersResult: Result<[Int], Error> = tokensResult.map { tokens in
+    tokens.compactMap { token in
+        switch token {
+        case let .number(digit): return digit
+        default: return nil
+        }
+    }
+}
+
+print(numbersResult)
