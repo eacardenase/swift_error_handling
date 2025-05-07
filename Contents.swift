@@ -18,7 +18,7 @@ enum Token: CustomStringConvertible {
 
 class Lexer {
     enum Error: Swift.Error {
-        case invalidCharacter(Character)
+        case invalidCharacter(Character, String.Index)
     }
     
     let input: String
@@ -80,7 +80,7 @@ class Lexer {
             case " ":
                 advance()
             default:
-                throw Lexer.Error.invalidCharacter(nextCharacter)
+                throw Lexer.Error.invalidCharacter(nextCharacter, position)
             }
         }
         
@@ -162,8 +162,10 @@ func evaluate(_ input: String) {
         let parser = Parser(tokens: tokens)
         let result = try parser.parse()
         print("Parser output: \(result)")
-    } catch Lexer.Error.invalidCharacter(let character) {
-        print("Input contained an invalid character: \(character)")
+    } catch Lexer.Error.invalidCharacter(let character, let position) {
+        let distanceToPosition = input.distance(from: input.startIndex, to: position)
+        
+        print("Input contained an invalid character at \(distanceToPosition): \(character)")
     } catch Parser.Error.unexpectedEndOfInput {
         print("Unexpected end of input during parsing")
     } catch Parser.Error.invalidToken(let token) {
@@ -173,10 +175,12 @@ func evaluate(_ input: String) {
     }
 }
 
-evaluate("10 + 3 + 5")
+//evaluate("10 + 3 + 5")
 //evaluate("10+3+5")
 //evaluate("10! + 3 + 5")
-evaluate("1 + 2 + three")
+//evaluate("1 + 2 + three")
 //evaluate("10 + 3 5")
 //evaluate("10 + 3 +")
-evaluate("10 + 5 - 3 - 1")
+//evaluate("10 + 5 - 3 - 1")
+evaluate("1 + 3 + 7a + 8")
+evaluate("10 + 3 3 + 7")
