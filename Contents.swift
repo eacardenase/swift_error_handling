@@ -162,7 +162,7 @@ func evaluate(_ input: String) {
         let parser = Parser(tokens: tokens)
         let result = try parser.parse()
         print("Parser output: \(result)")
-    } catch Lexer.Error.invalidCharacter(let character, let position) {
+    } catch let Lexer.Error.invalidCharacter(character, position) {
         let distanceToPosition = input.distance(from: input.startIndex, to: position)
         
         print("Input contained an invalid character at \(distanceToPosition): \(character)")
@@ -191,7 +191,7 @@ let tokensResult = Result { try lexer.lex() }
 switch tokensResult {
 case let .success(tokens):
     print("Found \(tokens.count) tokens: \(tokens)")
-case let .failure(error):
+case .failure(let error):
     print("Couldn't lex '\(lexer.input)': \(error)")
 }
 
