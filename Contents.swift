@@ -2,7 +2,7 @@ import Cocoa
 
 enum Token: CustomStringConvertible {
     case number(Int)
-    case plus
+    case plus, minus
     
     var description: String {
         switch self {
@@ -10,6 +10,8 @@ enum Token: CustomStringConvertible {
             return "Number: \(n)"
         case .plus:
             return "Symbol: +"
+        case .minus:
+            return "Symbol: -"
         }
     }
 }
@@ -72,6 +74,9 @@ class Lexer {
             case "+":
                 tokens.append(.plus)
                 advance()
+            case "-":
+                tokens.append(.minus)
+                advance()
             case " ":
                 advance()
             default:
@@ -115,7 +120,7 @@ class Parser {
         switch token {
         case .number(let value):
             return value
-        case .plus:
+        case .plus, .minus:
             throw Parser.Error.invalidToken(token)
         }
     }
@@ -128,6 +133,9 @@ class Parser {
             case .plus:
                 let nextNumber = try getNumber()
                 value += nextNumber
+            case .minus:
+                let nextNumber = try getNumber()
+                value -= nextNumber
             case .number:
                 throw Parser.Error.invalidToken(token)
             }
@@ -171,3 +179,4 @@ evaluate("10 + 3 + 5")
 evaluate("1 + 2 + three")
 //evaluate("10 + 3 5")
 //evaluate("10 + 3 +")
+evaluate("10 + 5 - 3 - 1")
